@@ -1,8 +1,7 @@
-def cal(username='',password=''):
-    print("ok")
 
-
-    return sum
+password = "fdsafd"
+def cal(username='',password=password):
+    print(password)
 
 if __name__ == "__main__":
-    sum = cal(1,2)
+    sum = cal()

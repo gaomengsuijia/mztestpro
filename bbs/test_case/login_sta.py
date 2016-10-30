@@ -32,9 +32,10 @@ class LoginTest(myunit.MyTest):
         '''用户名正确，密码为空'''
         self.user_login_verify(username='18565660212')
         po = Login(self.driver)
-        username_mes = po.username_erro()
-        print(username_mes)
-        self.assertEqual(username_mes, '密码不能为空')
+        password_erro_loc = ".//*[@id='mainForm']/span[1]"
+        password_mes = po.password_erro(password_erro_loc=password_erro_loc)
+        print(password_mes)
+        self.assertEqual(password_mes,'密码不能为空')
         function.insert_img(self.driver, 'password_kong.jpg')
 
 

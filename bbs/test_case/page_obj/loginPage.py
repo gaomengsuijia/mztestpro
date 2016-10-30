@@ -15,8 +15,9 @@ class Login(Page):
 
 
     def bbs_login(self):
-        self.find_element(*self.bbs_login_user_loc).click()
-        #sleep(3)
+        #self.find_element(*self.bbs_login_user_loc).click()
+        above = self.find_element(*self.bbs_login_user_loc)
+        ActionChains(self.driver).move_to_element(above).perform()
         self.find_element(*self.bbs_login_button_loc).click()
 
     login_username_loc = (By.ID,"account")
@@ -60,7 +61,7 @@ class Login(Page):
         return self.find_element(*self.username_erro_loc).text
 
     #密码错误
-    def password_erro(self):
+    def password_erro(self,password_erro_loc=password_erro_loc):
         return self.find_element(*self.password_erro_loc).text
 
     #登录成功
