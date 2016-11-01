@@ -53,15 +53,15 @@ class Login(Page):
         sleep(1)
 
     #登录断言
-    username_erro_loc = (By.XPATH,".//*[@id='err-tips-phone']")
-    password_erro_loc = (By.XPATH,".//*[@id='mainForm']/span[2]")
+    username_erro_loc = (By.XPATH,"//span[@for='account']")
+    password_erro_loc = (By.XPATH,"//span[@for='password']")
 
     #用户名错误
     def username_erro(self):
         return self.find_element(*self.username_erro_loc).text
 
     #密码错误
-    def password_erro(self,password_erro_loc=password_erro_loc):
+    def password_erro(self):
         return self.find_element(*self.password_erro_loc).text
 
     #登录成功

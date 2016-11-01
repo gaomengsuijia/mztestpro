@@ -6,6 +6,7 @@ sys.path.append("./page_obj")
 from models import myunit,function
 from page_obj.loginPage import Login
 from time import sleep
+from selenium.webdriver.common.by import By
 
 
 class LoginTest(myunit.MyTest):
@@ -32,8 +33,7 @@ class LoginTest(myunit.MyTest):
         '''用户名正确，密码为空'''
         self.user_login_verify(username='18565660212')
         po = Login(self.driver)
-        password_erro_loc = ".//*[@id='mainForm']/span[1]"
-        password_mes = po.password_erro(password_erro_loc=password_erro_loc)
+        password_mes = po.password_erro()
         print(password_mes)
         self.assertEqual(password_mes,'密码不能为空')
         function.insert_img(self.driver, 'password_kong.jpg')
