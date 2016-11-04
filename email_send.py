@@ -39,7 +39,10 @@ class Sendemail():
     #发送带附件的邮件,
     def send_attachment(self,file_name):
         msg = MIMEMultipart()
-        #读取文件
+        msg = self.email_info(msg)
+        msg.attach(MIMEText('测试报告在附件中，请下载查收', 'plain', 'utf-8'))
+
+        #读取本地测试报告
         try:
             with open(file_name,'rb') as f:
                 f_read = f.read()
@@ -48,7 +51,7 @@ class Sendemail():
 
         att1 = MIMEText(f_read, 'base64', 'utf-8')
         att1["Content-Type"] = 'application/octet-stream'
-        att1["Content-Disposition"] = 'attachment; filename="自动化测试报告.html"'
+        att1["Content-Disposition"] = 'attachment; filename="1.html"'
         # 这里的filename可以任意写，写什么名字，邮件中显示什么名字
         msg.attach(att1)
         return msg
