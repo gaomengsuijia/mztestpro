@@ -6,7 +6,6 @@ import smtplib,sys,os
 sys.path.append('./bbs')
 from bbs import test
 from email.header import Header
-<<<<<<< HEAD
 
 #得到最新的报告文件
 def lis(file_path):
@@ -15,14 +14,12 @@ def lis(file_path):
     for f in files:
         kuo = os.path.splitext(f)[1]
         if kuo == ".html":
-       :     fil = file_path + f
+            fil = file_path + f
             f_times = os.path.getctime(fil)
             f_time.append((f_times,f))
             f_time = sorted(f_time,key=lambda f_time : f_time[0])
     return f_time[-1][1]
 
-=======
->>>>>>> 5245c69034ec5aa43914843cccde423ad17c5c78
 #格式化收件人的显示名字，貌似现在不起作用了
 def _format_addr(s):
     '''格式化一个邮件地址。因为如果包含中文，需要通过Header对象进行编码'''
