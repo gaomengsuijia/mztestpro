@@ -6,6 +6,7 @@ import smtplib,sys,os
 sys.path.append('./bbs')
 from bbs import test
 from email.header import Header
+<<<<<<< HEAD
 
 #得到最新的报告文件
 def lis(file_path):
@@ -14,17 +15,24 @@ def lis(file_path):
     for f in files:
         kuo = os.path.splitext(f)[1]
         if kuo == ".html":
-            fil = file_path + f
+       :     fil = file_path + f
             f_times = os.path.getctime(fil)
             f_time.append((f_times,f))
             f_time = sorted(f_time,key=lambda f_time : f_time[0])
     return f_time[-1][1]
 
+=======
+>>>>>>> 5245c69034ec5aa43914843cccde423ad17c5c78
 #格式化收件人的显示名字，貌似现在不起作用了
 def _format_addr(s):
     '''格式化一个邮件地址。因为如果包含中文，需要通过Header对象进行编码'''
     name, addr = parseaddr(s)
     return formataddr((Header(name, 'utf-8').encode(), addr))
+
+#打开测试报告
+def open_report(file_path):
+    file = file_path + 'result1478008428.605949.html'
+    print(file)
 
 
 # 输入Email地址和口令:
@@ -60,4 +68,9 @@ server = smtplib.SMTP(smtp_server, 25) # SMTP协议默认端口是25
 server.set_debuglevel(1)#打印发送过程
 server.login(from_addr, password)
 server.sendmail(from_addr, [to_addr], msg.as_string())
+print("邮件发送成功")
 server.quit()
+
+if __name__ == "__main__":
+    file_path = "./bbs/report/"
+    open_report(file_path)
