@@ -19,9 +19,13 @@ class Sendemail():
 
     #设置邮件主题等信息
     def email_info(self,msg):
-        msg['From'] = self._format_addr('Python爱好者 <%s>' % self.from_addr)
-        msg['Subject'] = Header(u'邮件主题', 'utf8').encode()
-        msg['To'] = self._format_addr('邮件发送者 <%s>' % self.to_addr)
+        #来邮件提示的信息
+        msg['From'] = self._format_addr('大白菜自动化测试报告 <%s>' % self.from_addr)
+        #邮件的主题信息
+        msg['Subject'] = Header(u'大白菜自动化测试报告', 'utf8').encode()
+        #邮件的收件人,必须使用join方法，才能发送给多人
+        msg['To'] = ','.join(self.to_addr)
+        #msg['To'] = self._format_addr('测试人员 <%s>' % self.to_addr)
         return msg
 
     #发送纯文本邮件
@@ -31,7 +35,15 @@ class Sendemail():
         return msg
 
     #发送正文是HTML格式的邮件
-    def send_html(self,html):
+    def send_html(self,file_name):
+
+        # 读取本地测试报告
+        try:
+            with open(file_name, 'rb') as f:
+                html = f.read()
+        except OSError as e:
+            print('文件读取失败')
+
         msg = MIMEText(html, 'html', 'utf-8')
         msg = self.email_info(msg)
         return msg
@@ -40,6 +52,7 @@ class Sendemail():
     def send_attachment(self,file_name):
         msg = MIMEMultipart()
         msg = self.email_info(msg)
+        #邮件的正文内容
         msg.attach(MIMEText('测试报告在附件中，请下载查收', 'plain', 'utf-8'))
 
         #读取本地测试报告
@@ -51,7 +64,7 @@ class Sendemail():
 
         att1 = MIMEText(f_read, 'base64', 'utf-8')
         att1["Content-Type"] = 'application/octet-stream'
-        att1["Content-Disposition"] = 'attachment; filename="1.html"'
+        att1["Content-Disposition"] = 'attachment; filename=%s' % file_name.split('/')[-1]
         # 这里的filename可以任意写，写什么名字，邮件中显示什么名字
         msg.attach(att1)
         return msg
@@ -63,7 +76,7 @@ class Sendemail():
             server = smtplib.SMTP(smtp_server, 25)  # SMTP协议默认端口是25
             server.set_debuglevel(1)  # 打印发送过程
             server.login(self.from_addr, self.password)
-            server.sendmail(self.from_addr, [self.to_addr], msg.as_string())
+            server.sendmail(self.from_addr, self.to_addr, msg.as_string())
             server.quit()
             print("发送邮件成功")
         except smtplib.SMTPException:

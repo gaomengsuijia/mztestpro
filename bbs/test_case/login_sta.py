@@ -20,22 +20,24 @@ class LoginTest(myunit.MyTest):
         '''用户名和密码都为空'''
         self.user_login_verify()
         po = Login(self.driver)
-        username_mes = po.username_erro()
-        password_mes = po.password_erro()
+        alert = po.alert_info()
+        username_mes = alert.text
         print(username_mes)
-        print(password_mes)
-        self.assertEqual(username_mes,'账号不能为空')
-        self.assertEqual(password_mes,'密码不能为空')
-        sleep(2)
+        self.assertEqual(username_mes, '账号或密码不能为空！')
+        alert.accept()
+        sleep(1)
         function.insert_img(self.driver,'username_pass_kong.jpg')
 
     def test_login2(self):
         '''用户名正确，密码为空'''
         self.user_login_verify(username='18565660212')
         po = Login(self.driver)
-        password_mes = po.password_erro()
-        print(password_mes)
-        self.assertEqual(password_mes,'密码不能为空')
+        alert = po.alert_info()
+        username_mes = alert.text
+        print(username_mes)
+        self.assertEqual(username_mes, '账号或密码不能为空！')
+        alert.accept()
+        sleep(1)
         function.insert_img(self.driver, 'password_kong.jpg')
 
 

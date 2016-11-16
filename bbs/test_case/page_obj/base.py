@@ -4,7 +4,7 @@ class Page(object):
     '''
     基础页面，供所有的页面对象继承
     '''
-    bbs_url = "http://bbs.meizu.cn"
+    bbs_url = "http://10.200.12.8:8099"
     def __init__(self,selenium_driver,base_url=bbs_url,parent=None):
         self.base_url = base_url
         self.driver = selenium_driver
@@ -31,6 +31,10 @@ class Page(object):
 
     def find_elements(self,*loc):
         return self.driver.find_elements(*loc)
+
+    #获取弹出框内的文案
+    def alert_info(self):
+        return self.driver.switch_to_alert()
 
 
 

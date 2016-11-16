@@ -13,7 +13,7 @@ def browser():
 	
 	
 if __name__ == "__main__":
-        print(__file__)
-        dr = browser()
-        dr.get("http://www.baidu.com")
-        dr.quit()
+    print(__file__)
+    dr = browser()
+    dr.get("http://www.baidu.com")
+    dr.quit()
